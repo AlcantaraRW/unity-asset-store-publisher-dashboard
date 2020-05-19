@@ -14,13 +14,30 @@ import {
 
 import Rate from '../Rate';
 
-const Package: React.FC = () => {
+interface IPackage {
+  package_id: string;
+  name: string;
+  size: number;
+  created: Date;
+  modified: Date;
+  version_name: string;
+  price: number;
+  status: string;
+}
+
+interface IPackageProps {
+  info: IPackage;
+}
+
+const Package: React.FC<IPackageProps> = ({ info }) => {
+  const { name, price, version_name } = info;
+
   return (
     <Container>
-      <PackageName>Easy Advertise (Google AdMob)</PackageName>
-      <Price>$8</Price>
+      <PackageName>{name}</PackageName>
+      <Price>{price}</Price>
       <Row>
-        <Version>1.0.0</Version>
+        <Version>{version_name}</Version>
         <Rate value={4} />
       </Row>
       <Separator />

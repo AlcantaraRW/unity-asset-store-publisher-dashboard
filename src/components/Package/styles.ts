@@ -2,11 +2,12 @@ import styled from 'styled-components/native';
 import Colors from '../../utils/colors';
 
 export const Container = styled.View.attrs({
-  elevation: 5,
+  elevation: 2,
 })`
   background: ${Colors.WHITE};
   border-radius: 10px;
   padding: 15px 18px;
+  margin-bottom: 5px;
 `;
 
 export const PackageName = styled.Text`
