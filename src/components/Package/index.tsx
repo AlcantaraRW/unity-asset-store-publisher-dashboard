@@ -23,6 +23,8 @@ interface IPackage {
   version_name: string;
   price: number;
   status: string;
+  average_rating: number;
+  short_url: string;
 }
 
 interface IPackageProps {
@@ -30,7 +32,7 @@ interface IPackageProps {
 }
 
 const Package: React.FC<IPackageProps> = ({ info }) => {
-  const { name, price, version_name } = info;
+  const { name, price, version_name, average_rating, short_url } = info;
 
   return (
     <Container>
@@ -38,7 +40,7 @@ const Package: React.FC<IPackageProps> = ({ info }) => {
       <Price>{price}</Price>
       <Row>
         <Version>{version_name}</Version>
-        <Rate value={4} />
+        <Rate value={average_rating} />
       </Row>
       <Separator />
       <ButtonsContainer>
@@ -46,7 +48,7 @@ const Package: React.FC<IPackageProps> = ({ info }) => {
           <ButtonText>DETAILS</ButtonText>
         </Button>
 
-        <Button>
+        <Button onPress={() => console.log(short_url)}>
           <ButtonText>VIEW PACKAGE</ButtonText>
         </Button>
 

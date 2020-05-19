@@ -25,19 +25,3 @@ export const ListContainer = styled.View`
 export const ListSeparator = styled.View`
   height: 5px;
 `;
-
-export const Footer = styled.View`
-  border-top-width: 1px;
-  border-top-color: ${Colors.LINE};
-  background: #e5e5e5;
-  padding: 10px;
-  align-items: center;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-`;
-
-export const Totals = styled.Text`
-  font-size: 16px;
-`;

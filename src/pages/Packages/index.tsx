@@ -1,17 +1,18 @@
-import React from 'react';
-import { View, FlatList } from 'react-native';
+import React, { useEffect, useState, useMemo } from 'react';
+import { FlatList } from 'react-native';
 
 import {
   Container,
   Header,
   Title,
-  Footer,
-  Totals,
   ListContainer,
   ListSeparator,
 } from './styles';
 
 import Package from '../../components/Package';
+
+import api from '../../services/api';
+import PackageTransformer from '../../utils/PackageTransformer';
 
 interface IPackage {
   package_id: string;
@@ -22,56 +23,35 @@ interface IPackage {
   version_name: string;
   price: number;
   status: string;
+  average_rating: number;
+  short_url: string;
 }
 
 const Packages: React.FC = () => {
-  const packages: IPackage[] = [
-    {
-      package_id: '96896',
-      name: 'Easy Leaderboard (Facebook + PlayFab)',
-      size: '1166495',
-      created: new Date(2020, 4, 7),
-      modified: new Date(2020, 4, 8),
-      version_name: '2.0.3',
-      price: '12.00',
-      status: 'published',
-    },
-    {
-      package_id: '136568',
-      name: 'Easy Advertise (Google AdMob)',
-      size: '1166495',
-      created: new Date(2020, 2, 10),
-      modified: new Date(2020, 2, 13),
-      version_name: '1.0.0',
-      price: '8.00',
-      status: 'published',
-    },
-    {
-      package_id: '96896x',
-      name: 'Easy Leaderboard (Facebook + PlayFab)',
-      size: '1166495',
-      created: new Date(2020, 4, 7),
-      modified: new Date(2020, 4, 8),
-      version_name: '2.0.3',
-      price: '12.00',
-      status: 'published',
-    },
-    {
-      package_id: '136568x',
-      name: 'Easy Advertise (Google AdMob)',
-      size: '1166495',
-      created: new Date(2020, 2, 10),
-      modified: new Date(2020, 2, 13),
-      version_name: '1.0.0',
-      price: '8.00',
-      status: 'published',
-    },
-  ];
+  const [packages, setPackages] = useState<IPackage[]>([]);
+
+  useEffect(() => {
+    async function loadPackages(): Promise<void> {
+      const response = await api.get('management/packages.json');
+
+      const transformedData = PackageTransformer.transform(response.data);
+
+      setPackages(transformedData);
+    }
+
+    loadPackages();
+  }, []);
+
+  const numberOfPackages = useMemo(() => packages.length, [packages]);
 
   return (
     <Container>
       <Header>
-        <Title>Published packages</Title>
+        <Title>
+          {`Published packages${
+            numberOfPackages > 0 ? ` (${numberOfPackages})` : ''
+          }`}
+        </Title>
       </Header>
 
       <ListContainer>
@@ -83,10 +63,6 @@ const Packages: React.FC = () => {
           showsVerticalScrollIndicator={false}
         />
       </ListContainer>
-
-      <Footer>
-        <Totals>2 published packages</Totals>
-      </Footer>
     </Container>
   );
 };
