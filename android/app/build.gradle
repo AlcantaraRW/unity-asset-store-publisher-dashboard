@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.rntstemplate"
+        applicationId "com.uaspubdashboard"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -44,8 +44,8 @@ def flipper_post_install(installer)
   end
 end
 
-target 'rntstemplate' do
-  # Pods for rntstemplate
+target 'uaspubdashboard' do
+  # Pods for uaspubdashboard
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -77,7 +77,7 @@ target 'rntstemplate' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  target 'rntstemplateTests' do
+  target 'uaspubdashboardTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -94,10 +94,10 @@ target 'rntstemplate' do
   end
 end
 
-target 'rntstemplate-tvOS' do
-  # Pods for rntstemplate-tvOS
+target 'uaspubdashboard-tvOS' do
+  # Pods for uaspubdashboard-tvOS
 
-  target 'rntstemplate-tvOSTests' do
+  target 'uaspubdashboard-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end
