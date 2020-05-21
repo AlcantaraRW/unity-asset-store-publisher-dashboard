@@ -1,5 +1,6 @@
 import React from 'react';
 import { Linking } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   Container,
@@ -21,10 +22,26 @@ interface IPackageProps {
 }
 
 const Package: React.FC<IPackageProps> = ({ info }) => {
-  const { name, price, version_name, average_rating, short_url } = info;
+  const {
+    package_id,
+    name,
+    price,
+    version_name,
+    average_rating,
+    short_url,
+  } = info;
+
+  const { navigate } = useNavigation();
 
   function handleViewPackage(): void {
     Linking.openURL(short_url);
+  }
+
+  function handleViewReviews(): void {
+    navigate('Reviews', {
+      package_id,
+      name,
+    });
   }
 
   return (
@@ -45,7 +62,7 @@ const Package: React.FC<IPackageProps> = ({ info }) => {
           <ButtonText>VIEW PACKAGE</ButtonText>
         </Button>
 
-        <Button>
+        <Button onPress={handleViewReviews}>
           <ButtonText>REVIEWS</ButtonText>
         </Button>
       </ButtonsContainer>

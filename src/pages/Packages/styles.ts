@@ -18,6 +18,11 @@ export const Title = styled.Text`
   font-weight: bold;
 `;
 
+export const TotalEntries = styled.Text`
+  font-size: 15px;
+  text-align: center;
+`;
+
 export const ListContainer = styled.View`
   margin: 0 15px 100px;
 `;

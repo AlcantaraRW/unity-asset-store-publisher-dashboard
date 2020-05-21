@@ -10,12 +10,19 @@ export const Header = styled.View.attrs({
   elevation: 3,
 })`
   align-items: center;
+  justify-content: center;
   padding: 15px;
 `;
 
 export const Title = styled.Text`
   font-size: 20px;
   font-weight: bold;
+  text-align: center;
+`;
+
+export const TotalEntries = styled.Text`
+  font-size: 15px;
+  text-align: center;
 `;
 
 export const ListContainer = styled.View`

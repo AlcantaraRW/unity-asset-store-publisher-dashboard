@@ -5,6 +5,7 @@ import {
   Container,
   Header,
   Title,
+  TotalEntries,
   ListContainer,
   ListSeparator,
 } from './styles';
@@ -14,6 +15,7 @@ import Package from '../../components/Package';
 import api from '../../services/api';
 import PackageResponseTransformer from '../../utils/responseTransformers/PackageResponseTransformer';
 import IPackage from '../../models/IPackage';
+import getQuantitativeText from '../../utils/getQuantitativeText';
 
 const Packages: React.FC = () => {
   const [packages, setPackages] = useState<IPackage[]>([]);
@@ -37,11 +39,12 @@ const Packages: React.FC = () => {
   return (
     <Container>
       <Header>
-        <Title>
-          {`Published packages${
-            numberOfPackages > 0 ? ` (${numberOfPackages})` : ''
-          }`}
-        </Title>
+        <Title>Published packages</Title>
+        {numberOfPackages > 0 && (
+          <TotalEntries>
+            {getQuantitativeText(numberOfPackages, 'package')}
+          </TotalEntries>
+        )}
       </Header>
 
       <ListContainer>

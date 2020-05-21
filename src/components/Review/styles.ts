@@ -39,7 +39,7 @@ export const Content = styled.Text.attrs({
 export const Separator = styled.View`
   border-top-width: 1px;
   border-top-color: ${Colors.LINE};
-  margin: 15px 0;
+  margin: 10px 0;
 `;
 
 export const Button = styled.TouchableOpacity`
