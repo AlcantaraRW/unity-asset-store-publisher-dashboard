@@ -1,4 +1,5 @@
 import React from 'react';
+import { Linking } from 'react-native';
 
 import {
   Container,
@@ -12,20 +13,8 @@ import {
   ButtonsContainer,
 } from './styles';
 
+import IPackage from '../../models/IPackage';
 import Rate from '../Rate';
-
-interface IPackage {
-  package_id: string;
-  name: string;
-  size: number;
-  created: Date;
-  modified: Date;
-  version_name: string;
-  price: number;
-  status: string;
-  average_rating: number;
-  short_url: string;
-}
 
 interface IPackageProps {
   info: IPackage;
@@ -34,10 +23,14 @@ interface IPackageProps {
 const Package: React.FC<IPackageProps> = ({ info }) => {
   const { name, price, version_name, average_rating, short_url } = info;
 
+  function handleViewPackage(): void {
+    Linking.openURL(short_url);
+  }
+
   return (
     <Container>
       <PackageName>{name}</PackageName>
-      <Price>{price}</Price>
+      <Price>{`$${price}`}</Price>
       <Row>
         <Version>{version_name}</Version>
         <Rate value={average_rating} />
@@ -48,7 +41,7 @@ const Package: React.FC<IPackageProps> = ({ info }) => {
           <ButtonText>DETAILS</ButtonText>
         </Button>
 
-        <Button onPress={() => console.log(short_url)}>
+        <Button onPress={handleViewPackage}>
           <ButtonText>VIEW PACKAGE</ButtonText>
         </Button>
 

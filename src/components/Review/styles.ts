@@ -2,11 +2,12 @@ import styled from 'styled-components/native';
 import Colors from '../../utils/colors';
 
 export const Container = styled.View.attrs({
-  elevation: 5,
+  elevation: 2,
 })`
   background: ${Colors.WHITE};
   border-radius: 10px;
   padding: 15px 18px;
+  margin-bottom: 10px;
 `;
 
 export const Subject = styled.Text`
@@ -17,13 +18,13 @@ export const Subject = styled.Text`
 export const Row = styled.View`
   flex-direction: row;
   margin-top: 5px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   align-items: center;
 `;
 
 export const Date = styled.Text`
   color: ${Colors.DARK_GRAY};
-  font-size: 14px;
+  font-size: 13px;
   margin-left: 5px;
 `;
 
@@ -31,7 +32,7 @@ export const Content = styled.Text.attrs({
   numberOfLines: 3,
 })`
   color: ${Colors.DARK_GRAY};
-  font-size: 16px;
+  font-size: 15px;
   font-style: italic;
 `;
 
