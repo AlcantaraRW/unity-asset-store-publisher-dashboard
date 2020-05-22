@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatList } from 'react-native';
+import IKeyValuePair from '../../models/IKeyValuePair';
 
 import {
   Container,
@@ -11,7 +12,6 @@ import {
   CancelButton,
   CancelButtonText,
 } from './styles';
-import IKeyValuePair from '../../models/IKeyValuePair';
 
 interface IPickerProps {
   items: IKeyValuePair[];
@@ -24,12 +24,6 @@ const Picker: React.FC<IPickerProps> = ({
   onItemClicked,
   onCancelClicked,
 }) => {
-  // const items = [
-  //   { title: '2020 September', value: '202009' },
-  //   { title: '2020 October', value: '202010' },
-  //   { title: '2020 November', value: '202011' },
-  // ];
-
   return (
     <Container>
       <ListContainer>

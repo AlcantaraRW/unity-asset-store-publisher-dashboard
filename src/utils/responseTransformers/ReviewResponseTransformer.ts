@@ -1,5 +1,5 @@
 import IUnityReviewsResponse from '../../models/responses/IUnityReviewsResponse';
-import IReviewResponse from '../../models/IReviewResponse';
+import IReviewResponse from '../../models/reviews/IReviewResponse';
 import parseDateFromString from '../parseDateFromString';
 
 class ReviewResponseTransformer {

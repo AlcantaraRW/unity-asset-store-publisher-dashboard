@@ -14,7 +14,7 @@ import Package from '../../components/Package';
 
 import api from '../../services/api';
 import PackageResponseTransformer from '../../utils/responseTransformers/PackageResponseTransformer';
-import IPackage from '../../models/IPackage';
+import IPackage from '../../models/packages/IPackage';
 import getQuantitativeText from '../../utils/getQuantitativeText';
 import Center from '../../components/Center';
 import Loader from '../../components/Loader';

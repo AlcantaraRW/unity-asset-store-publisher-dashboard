@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Modal from 'react-native-modal';
+import IPackage from '../../models/packages/IPackage';
+import Rate from '../Rate';
+import DetailsModal from '../DetailsModal';
+import IKeyValuePair from '../../models/IKeyValuePair';
+import formatDate from '../../utils/formatDate';
+import formatPackageSize from '../../utils/formatPackageSize';
 
 import {
   Container,
@@ -14,13 +20,6 @@ import {
   ButtonText,
   ButtonsContainer,
 } from './styles';
-
-import IPackage from '../../models/IPackage';
-import Rate from '../Rate';
-import DetailsModal from '../DetailsModal';
-import IKeyValuePair from '../../models/IKeyValuePair';
-import formatDate from '../../utils/formatDate';
-import formatPackageSize from '../../utils/formatPackageSize';
 
 interface IPackageProps {
   info: IPackage;

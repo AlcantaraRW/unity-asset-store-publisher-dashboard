@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
 import Modal from 'react-native-modal';
+import ISale from '../../models/sales/ISale';
+import getQuantitativeText from '../../utils/getQuantitativeText';
+import formatPrice from '../../utils/formatPrice';
+import IKeyValuePair from '../../models/IKeyValuePair';
+import formatDate from '../../utils/formatDate';
+import DetailsModal from '../DetailsModal';
 
 import {
   Container,
@@ -14,13 +20,6 @@ import {
   Button,
   ButtonText,
 } from './styles';
-
-import ISale from '../../models/sales/ISale';
-import getQuantitativeText from '../../utils/getQuantitativeText';
-import formatPrice from '../../utils/formatPrice';
-import IKeyValuePair from '../../models/IKeyValuePair';
-import formatDate from '../../utils/formatDate';
-import DetailsModal from '../DetailsModal';
 
 interface ISaleProps {
   sale: ISale;

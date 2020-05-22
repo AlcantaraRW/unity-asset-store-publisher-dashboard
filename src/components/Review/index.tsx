@@ -1,5 +1,8 @@
 import React from 'react';
 import { Linking } from 'react-native';
+import Rate from '../Rate';
+import formatDate from '../../utils/formatDate';
+import IReview from '../../models/reviews/IReview';
 
 import {
   Container,
@@ -12,21 +15,8 @@ import {
   ButtonText,
 } from './styles';
 
-import Rate from '../Rate';
-import formatDate from '../../utils/formatDate';
-
 interface IReviewProps {
   review: IReview;
-}
-
-interface IReview {
-  body: string;
-  created_at: Date;
-  subject: string;
-  name: string;
-  package_id: string;
-  rating: number;
-  review_id: string;
 }
 
 const Review: React.FC<IReviewProps> = ({ review }) => {

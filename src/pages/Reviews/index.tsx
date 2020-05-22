@@ -13,7 +13,7 @@ import {
 import api from '../../services/api';
 import Review from '../../components/Review';
 import ReviewResponseTransformer from '../../utils/responseTransformers/ReviewResponseTransformer';
-import IReview from '../../models/IReview';
+import IReview from '../../models/reviews/IReview';
 import getQuantitativeText from '../../utils/getQuantitativeText';
 import Center from '../../components/Center';
 import Loader from '../../components/Loader';

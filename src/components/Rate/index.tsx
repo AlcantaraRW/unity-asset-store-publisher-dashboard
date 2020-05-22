@@ -2,6 +2,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Container } from './styles';
+import Colors from '../../utils/colors';
 
 interface IRateProps {
   value: number;
@@ -16,7 +17,7 @@ const Rate: React.FC<IRateProps> = ({ value }) => {
         <Icon
           key={i.toString()}
           name={i < value ? 'star' : 'star-outline'}
-          color="#2196f3"
+          color={Colors.VIVID_BLUE}
           size={15}
         />
       ))}

@@ -1,5 +1,5 @@
 import IUnityPackagesResponse from '../../models/responses/IUnityPackagesResponse';
-import IPackage from '../../models/IPackage';
+import IPackage from '../../models/packages/IPackage';
 import parseDateFromString from '../parseDateFromString';
 
 class PackageResponseTransformer {

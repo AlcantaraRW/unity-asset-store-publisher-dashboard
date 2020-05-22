@@ -1,8 +1,7 @@
 import React from 'react';
+import IKeyValuePair from '../../models/IKeyValuePair';
 
 import { Container, Detail, Title, Value, Button, ButtonText } from './styles';
-
-import IKeyValuePair from '../../models/IKeyValuePair';
 
 interface IDetailsModalProps {
   details: IKeyValuePair[];
