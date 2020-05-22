@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Modal from 'react-native-modal';
 
 import {
   Container,
@@ -16,12 +17,19 @@ import {
 
 import IPackage from '../../models/IPackage';
 import Rate from '../Rate';
+import DetailsModal from '../DetailsModal';
+import IKeyValuePair from '../../models/IKeyValuePair';
+import formatDate from '../../utils/formatDate';
+import formatPackageSize from '../../utils/formatPackageSize';
 
 interface IPackageProps {
   info: IPackage;
 }
 
 const Package: React.FC<IPackageProps> = ({ info }) => {
+  const [showModal, setShowModal] = useState(false);
+  const { navigate } = useNavigation();
+
   const {
     package_id,
     name,
@@ -29,9 +37,18 @@ const Package: React.FC<IPackageProps> = ({ info }) => {
     version_name,
     average_rating,
     short_url,
+    created,
+    modified,
+    size,
   } = info;
 
-  const { navigate } = useNavigation();
+  const details: IKeyValuePair[] = [
+    { key: 'Package ID', value: package_id },
+    { key: 'Version', value: version_name },
+    { key: 'Size', value: formatPackageSize(size) },
+    { key: 'Created at', value: formatDate(created) },
+    { key: 'Modified at', value: formatDate(modified) },
+  ];
 
   function handleViewPackage(): void {
     Linking.openURL(short_url);
@@ -54,7 +71,7 @@ const Package: React.FC<IPackageProps> = ({ info }) => {
       </Row>
       <Separator />
       <ButtonsContainer>
-        <Button>
+        <Button onPress={() => setShowModal(true)}>
           <ButtonText>DETAILS</ButtonText>
         </Button>
 
@@ -66,6 +83,13 @@ const Package: React.FC<IPackageProps> = ({ info }) => {
           <ButtonText>REVIEWS</ButtonText>
         </Button>
       </ButtonsContainer>
+
+      <Modal isVisible={showModal}>
+        <DetailsModal
+          details={details}
+          onButtonPressed={() => setShowModal(false)}
+        />
+      </Modal>
     </Container>
   );
 };
