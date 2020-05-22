@@ -16,9 +16,12 @@ import api from '../../services/api';
 import PackageResponseTransformer from '../../utils/responseTransformers/PackageResponseTransformer';
 import IPackage from '../../models/IPackage';
 import getQuantitativeText from '../../utils/getQuantitativeText';
+import Center from '../../components/Center';
+import Loader from '../../components/Loader';
 
 const Packages: React.FC = () => {
   const [packages, setPackages] = useState<IPackage[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function loadPackages(): Promise<void> {
@@ -29,6 +32,7 @@ const Packages: React.FC = () => {
       );
 
       setPackages(transformedData);
+      setIsLoading(false);
     }
 
     loadPackages();
@@ -47,15 +51,21 @@ const Packages: React.FC = () => {
         )}
       </Header>
 
-      <ListContainer>
-        <FlatList
-          data={packages}
-          keyExtractor={item => item.package_id}
-          renderItem={({ item }) => <Package info={item} />}
-          ItemSeparatorComponent={() => <ListSeparator />}
-          showsVerticalScrollIndicator={false}
-        />
-      </ListContainer>
+      {isLoading ? (
+        <Center>
+          <Loader message="Loading packages..." />
+        </Center>
+      ) : (
+        <ListContainer>
+          <FlatList
+            data={packages}
+            keyExtractor={item => item.package_id}
+            renderItem={({ item }) => <Package info={item} />}
+            ItemSeparatorComponent={() => <ListSeparator />}
+            showsVerticalScrollIndicator={false}
+          />
+        </ListContainer>
+      )}
     </Container>
   );
 };

@@ -15,10 +15,14 @@ import Review from '../../components/Review';
 import ReviewResponseTransformer from '../../utils/responseTransformers/ReviewResponseTransformer';
 import IReview from '../../models/IReview';
 import getQuantitativeText from '../../utils/getQuantitativeText';
+import Center from '../../components/Center';
+import Loader from '../../components/Loader';
 
 const Reviews: React.FC = () => {
   const [reviews, setReviews] = useState<IReview[]>([]);
   const [totalEntries, setTotalEntries] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
   const { params } = useRoute();
 
   useEffect(() => {
@@ -33,6 +37,7 @@ const Reviews: React.FC = () => {
 
       setTotalEntries(transformedData.total_entries);
       setReviews(transformedData.reviews);
+      setIsLoading(false);
     }
 
     loadReviews();
@@ -49,14 +54,20 @@ const Reviews: React.FC = () => {
         )}
       </Header>
 
-      <ListContainer>
-        <FlatList
-          data={reviews}
-          keyExtractor={item => item.review_id}
-          renderItem={({ item }) => <Review review={item} />}
-          showsVerticalScrollIndicator={false}
-        />
-      </ListContainer>
+      {isLoading ? (
+        <Center>
+          <Loader message="Loading reviews..." />
+        </Center>
+      ) : (
+        <ListContainer>
+          <FlatList
+            data={reviews}
+            keyExtractor={item => item.review_id}
+            renderItem={({ item }) => <Review review={item} />}
+            showsVerticalScrollIndicator={false}
+          />
+        </ListContainer>
+      )}
     </Container>
   );
 };

@@ -11,6 +11,7 @@ import Sale from '../../components/Sale';
 import getQuantitativeText from '../../utils/getQuantitativeText';
 import formatPrice from '../../utils/formatPrice';
 import Loader from '../../components/Loader';
+import Center from '../../components/Center';
 
 import {
   Container,
@@ -19,7 +20,6 @@ import {
   PickMonthButton,
   SelectedMonth,
   NextMonthButton,
-  LoaderContainer,
   ListContainer,
   ListSeparator,
   Footer,
@@ -117,9 +117,9 @@ const Sales: React.FC = () => {
       </Header>
 
       {isLoading ? (
-        <LoaderContainer>
+        <Center>
           <Loader message="Loading sales..." />
-        </LoaderContainer>
+        </Center>
       ) : (
         <ListContainer>
           <FlatList

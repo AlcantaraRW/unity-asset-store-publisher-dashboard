@@ -32,11 +32,6 @@ export const NextMonthButton = styled.TouchableOpacity`
   padding-left: 15px;
 `;
 
-export const LoaderContainer = styled.View`
-  flex: 1px;
-  justify-content: center;
-`;
-
 export const ListContainer = styled.View`
   margin: 0 15px 108px;
 `;

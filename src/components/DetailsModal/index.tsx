@@ -1,14 +1,6 @@
 import React from 'react';
 
-import {
-  Container,
-  Detail,
-  Title,
-  Value,
-  Separator,
-  Button,
-  ButtonText,
-} from './styles';
+import { Container, Detail, Title, Value, Button, ButtonText } from './styles';
 
 import IKeyValuePair from '../../models/IKeyValuePair';
 
@@ -24,14 +16,10 @@ const DetailsModal: React.FC<IDetailsModalProps> = ({
   return (
     <Container>
       {details.map(detail => (
-        <>
-          <Detail key={detail.key}>
-            <Title>{detail.key}</Title>
-            <Value>{detail.value}</Value>
-          </Detail>
-
-          <Separator />
-        </>
+        <Detail key={detail.key}>
+          <Title>{detail.key}</Title>
+          <Value>{detail.value}</Value>
+        </Detail>
       ))}
       <Button onPress={onButtonPressed}>
         <ButtonText>CLOSE</ButtonText>
