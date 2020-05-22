@@ -19,11 +19,18 @@ export const PreviousMonthButton = styled.TouchableOpacity`
   padding-right: 15px;
 `;
 
+export const PickMonthButton = styled.TouchableOpacity``;
+
 export const SelectedMonth = styled.Text`
   font-size: 20px;
   font-weight: bold;
+  border-bottom-width: 2px;
 `;
 
 export const NextMonthButton = styled.TouchableOpacity`
   padding-left: 15px;
+`;
+
+export const ListContainer = styled.View`
+  margin: 0 15px 100px;
 `;

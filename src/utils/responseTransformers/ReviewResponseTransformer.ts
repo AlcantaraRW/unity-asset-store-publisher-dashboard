@@ -2,7 +2,7 @@ import IUnityReviewsResponse from '../../models/responses/IUnityReviewsResponse'
 import IReviewResponse from '../../models/IReviewResponse';
 import parseDateFromString from '../parseDateFromString';
 
-class ReviewTransformer {
+class ReviewResponseTransformer {
   static transform(raw: IUnityReviewsResponse): IReviewResponse {
     const { total_entries, last_page, reviews } = raw;
 
@@ -36,4 +36,4 @@ class ReviewTransformer {
   }
 }
 
-export default ReviewTransformer;
+export default ReviewResponseTransformer;

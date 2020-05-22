@@ -29,6 +29,7 @@ const DetailsModal: React.FC<IDetailsModalProps> = ({
             <Title>{detail.key}</Title>
             <Value>{detail.value}</Value>
           </Detail>
+
           <Separator />
         </>
       ))}

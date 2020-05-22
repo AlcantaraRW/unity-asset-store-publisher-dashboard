@@ -12,7 +12,7 @@ import {
 
 import api from '../../services/api';
 import Review from '../../components/Review';
-import ReviewTransformer from '../../utils/responseTransformers/ReviewTransformer';
+import ReviewResponseTransformer from '../../utils/responseTransformers/ReviewResponseTransformer';
 import IReview from '../../models/IReview';
 import getQuantitativeText from '../../utils/getQuantitativeText';
 
@@ -27,7 +27,9 @@ const Reviews: React.FC = () => {
         `publisher-info/reviews/30954.json?page=1&rows=20&order_key=date&sort=desc&asset_filter=${params.package_id}`,
       );
 
-      const transformedData = ReviewTransformer.transform(response.data);
+      const transformedData = ReviewResponseTransformer.transform(
+        response.data,
+      );
 
       setTotalEntries(transformedData.total_entries);
       setReviews(transformedData.reviews);
