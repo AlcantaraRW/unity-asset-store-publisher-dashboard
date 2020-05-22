@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, ActivityIndicator } from 'react-native';
+import { FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Modal from 'react-native-modal';
+import Picker from '../../components/Picker';
+import api from '../../services/api';
+import IKeyValuePair from '../../models/IKeyValuePair';
+import SaleResponseTransformer from '../../utils/responseTransformers/SaleResponseTransformer';
+import ISalesSummary from '../../models/sales/ISalesSummary';
+import Sale from '../../components/Sale';
+import getQuantitativeText from '../../utils/getQuantitativeText';
+import formatPrice from '../../utils/formatPrice';
+import Loader from '../../components/Loader';
 
 import {
   Container,
@@ -10,22 +19,22 @@ import {
   PickMonthButton,
   SelectedMonth,
   NextMonthButton,
+  LoaderContainer,
   ListContainer,
+  ListSeparator,
+  Footer,
+  Quantity,
+  Currencies,
+  Gross,
+  Net,
 } from './styles';
-
-import Picker from '../../components/Picker';
-import api from '../../services/api';
-import IKeyValuePair from '../../models/IKeyValuePair';
-import SaleResponseTransformer from '../../utils/responseTransformers/SaleResponseTransformer';
-import ISalesSummary from '../../models/sales/ISalesSummary';
-import Sale from '../../components/Sale';
 
 const Sales: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<IKeyValuePair>();
   const [availableMonths, setAvailableMonths] = useState<IKeyValuePair[]>([]);
-  const [showModal, setShowModal] = useState(false);
   const [salesSummary, setSalesSummary] = useState<ISalesSummary>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function loadMonths(): Promise<void> {
@@ -108,15 +117,31 @@ const Sales: React.FC = () => {
       </Header>
 
       {isLoading ? (
-        <ActivityIndicator />
+        <LoaderContainer>
+          <Loader message="Loading sales..." />
+        </LoaderContainer>
       ) : (
         <ListContainer>
           <FlatList
             data={salesSummary?.sales}
             keyExtractor={(_, index) => index.toString()}
             renderItem={({ item }) => <Sale sale={item} />}
+            showsVerticalScrollIndicator={false}
+            ItemSeparatorComponent={() => <ListSeparator />}
           />
         </ListContainer>
+      )}
+
+      {!isLoading && !!salesSummary && (
+        <Footer>
+          <Quantity>
+            {getQuantitativeText(salesSummary.totals.quantity, 'sale')}
+          </Quantity>
+          <Currencies>
+            <Gross>{formatPrice(salesSummary.totals.gross)}</Gross>
+            <Net>{formatPrice(salesSummary.totals.net)}</Net>
+          </Currencies>
+        </Footer>
       )}
 
       <Modal isVisible={showModal}>
