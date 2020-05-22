@@ -8,8 +8,8 @@ const Default = createStackNavigator();
 
 const DefaultRoutes: React.FC = () => (
   <Default.Navigator initialRouteName="Packages">
-    <Default.Screen name="Packages" component={Packages} />
-    <Default.Screen name="Reviews" component={Reviews} />
+    {/* <Default.Screen name="Packages" component={Packages} />
+    <Default.Screen name="Reviews" component={Reviews} /> */}
     <Default.Screen name="Sales" component={Sales} />
   </Default.Navigator>
 );

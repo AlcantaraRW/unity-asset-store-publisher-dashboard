@@ -37,5 +37,5 @@ export const CancelButton = styled.TouchableOpacity`
 
 export const CancelButtonText = styled.Text`
   color: ${Colors.VIVID_BLUE};
-  font-size: 12px;
+  font-size: 13px;
 `;

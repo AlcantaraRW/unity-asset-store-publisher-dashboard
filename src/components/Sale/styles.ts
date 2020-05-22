@@ -64,5 +64,5 @@ export const Button = styled.TouchableOpacity`
 
 export const ButtonText = styled.Text`
   color: ${Colors.VIVID_BLUE};
-  font-size: 12px;
+  font-size: 13px;
 `;
