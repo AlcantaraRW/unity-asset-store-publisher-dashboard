@@ -2,11 +2,12 @@ import React from 'react';
 
 import DrawerRoutes from './Drawer';
 import SignInStackRoutes from './SignInStack';
-
-const isSigned = false;
+import { useAuth } from '../hooks/auth';
 
 const DefaultRoutes: React.FC = () => {
-  return isSigned ? <DrawerRoutes /> : <SignInStackRoutes />;
+  const { isAuthenticated } = useAuth();
+
+  return isAuthenticated() ? <DrawerRoutes /> : <SignInStackRoutes />;
 };
 
 export default DefaultRoutes;

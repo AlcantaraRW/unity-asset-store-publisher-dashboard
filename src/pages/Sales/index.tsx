@@ -113,7 +113,7 @@ const Sales: React.FC = () => {
 
   const formattedTotalGrossValue = useMemo(() => {
     if (salesSummary) {
-      return getQuantitativeText(salesSummary.totals.quantity, 'sale');
+      return formatPrice(salesSummary.totals.gross);
     }
 
     return '';
