@@ -42,6 +42,12 @@ export const Separator = styled.View`
   margin: 10px 0;
 `;
 
+export const ButtonsContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 export const Button = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
