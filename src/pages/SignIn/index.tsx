@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import WebView from 'react-native-webview';
+import CookieManager from '@react-native-community/cookies';
 
+import { View } from 'react-native';
 import Colors from '../../utils/colors';
-import { Header, IconContainer, AppName } from './styles';
+import { Header, IconContainer, AppName, AssetStoreWebView } from './styles';
+import Loader from '../../components/Loader';
+
+const uri = 'https://publisher.assetstore.unity3d.com';
 
 const SignIn: React.FC = () => {
+  // useEffect(() => {
+  //   const cookieCheck = setInterval(() => {
+  //     CookieManager.get(uri).then(cookies => {
+  //       console.log({ cookies });
+  //     });
+  //   }, 1500);
+  // }, []);
+
   return (
     <>
       <Header>
@@ -15,9 +28,9 @@ const SignIn: React.FC = () => {
         <AppName>Unity Asset Store Publisher Dashboard</AppName>
       </Header>
 
-      <WebView
-        style={{ backgroundColor: Colors.LIGHT_GRAY }}
-        source={{ uri: 'https://publisher.assetstore.unity3d.com' }}
+      <AssetStoreWebView
+        source={{ uri }}
+        renderLoading={() => <Loader message="Loading webview..." />}
       />
     </>
   );

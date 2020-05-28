@@ -1,4 +1,6 @@
 import styled from 'styled-components/native';
+import WebView from 'react-native-webview';
+
 import Colors from '../../utils/colors';
 
 export const Header = styled.View`
@@ -22,4 +24,10 @@ export const AppName = styled.Text`
   font-weight: bold;
   text-align: center;
   margin: 10px;
+`;
+
+export const AssetStoreWebView = styled(WebView).attrs({
+  startInLoadingState: true,
+})`
+  background-color: ${Colors.LIGHT_GRAY};
 `;
