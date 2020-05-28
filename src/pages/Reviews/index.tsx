@@ -1,14 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { FlatList } from 'react-native';
-import { useRoute } from '@react-navigation/native';
-
-import {
-  Container,
-  Header,
-  Title,
-  TotalEntries,
-  ListContainer,
-} from './styles';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
 import api from '../../services/api';
 import Review from '../../components/Review';
@@ -18,12 +10,30 @@ import getQuantitativeText from '../../utils/getQuantitativeText';
 import Center from '../../components/Center';
 import Loader from '../../components/Loader';
 
+import {
+  Container,
+  Header,
+  Title,
+  TotalEntries,
+  ListContainer,
+} from './styles';
+
+type ReviewsRouteProp = RouteProp<
+  {
+    Reviews: {
+      package_id: string;
+      name: string;
+    };
+  },
+  'Reviews'
+>;
+
 const Reviews: React.FC = () => {
   const [reviews, setReviews] = useState<IReview[]>([]);
   const [totalEntries, setTotalEntries] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { params } = useRoute();
+  const { params } = useRoute<ReviewsRouteProp>();
 
   useEffect(() => {
     async function loadReviews(): Promise<void> {
