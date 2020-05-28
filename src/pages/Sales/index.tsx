@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Modal from 'react-native-modal';
 import Picker from '../../components/Picker';
 import api from '../../services/api';
-import IKeyValuePair from '../../models/IKeyValuePair';
 import SaleResponseTransformer from '../../utils/responseTransformers/SaleResponseTransformer';
+import IKeyValuePair from '../../models/IKeyValuePair';
+import IUnityMonthsResponse from '../../models/responses/IUnityMonthsResponse';
 import ISalesSummary from '../../models/sales/ISalesSummary';
 import Sale from '../../components/Sale';
 import getQuantitativeText from '../../utils/getQuantitativeText';
@@ -38,7 +39,9 @@ const Sales: React.FC = () => {
 
   useEffect(() => {
     async function loadMonths(): Promise<void> {
-      const response = await api.get('publisher-info/months/30954.json');
+      const response = await api.get<IUnityMonthsResponse>(
+        'publisher-info/months/30954.json',
+      );
 
       if (response) {
         const months: IKeyValuePair[] = response.data.periods.map(period => ({
@@ -100,6 +103,30 @@ const Sales: React.FC = () => {
     setSelectedMonth(availableMonths[index - 1]);
   }
 
+  const totalQuantityText = useMemo(() => {
+    if (salesSummary) {
+      return getQuantitativeText(salesSummary.totals.quantity, 'sale');
+    }
+
+    return '';
+  }, [salesSummary]);
+
+  const formattedTotalGrossValue = useMemo(() => {
+    if (salesSummary) {
+      return getQuantitativeText(salesSummary.totals.quantity, 'sale');
+    }
+
+    return '';
+  }, [salesSummary]);
+
+  const formattedTotalNetValue = useMemo(() => {
+    if (salesSummary) {
+      return formatPrice(salesSummary.totals.net);
+    }
+
+    return '';
+  }, [salesSummary]);
+
   return (
     <Container>
       <Header>
@@ -134,12 +161,10 @@ const Sales: React.FC = () => {
 
       {!isLoading && !!salesSummary && (
         <Footer>
-          <Quantity>
-            {getQuantitativeText(salesSummary.totals.quantity, 'sale')}
-          </Quantity>
+          <Quantity>{totalQuantityText}</Quantity>
           <Currencies>
-            <Gross>{formatPrice(salesSummary.totals.gross)}</Gross>
-            <Net>{formatPrice(salesSummary.totals.net)}</Net>
+            <Gross>{formattedTotalGrossValue}</Gross>
+            <Net>{formattedTotalNetValue}</Net>
           </Currencies>
         </Footer>
       )}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Linking } from 'react-native';
 import Rate from '../Rate';
 import formatDate from '../../utils/formatDate';
@@ -28,12 +28,16 @@ const Review: React.FC<IReviewProps> = ({ review }) => {
     Linking.openURL(url);
   }
 
+  const formattedCreationDate = useMemo(() => formatDate(created_at), [
+    created_at,
+  ]);
+
   return (
     <Container>
       <Subject>{subject}</Subject>
       <Row>
         <Rate value={rating} />
-        <Date>{formatDate(created_at)}</Date>
+        <Date>{formattedCreationDate}</Date>
       </Row>
       <Content>{body}</Content>
       <Separator />

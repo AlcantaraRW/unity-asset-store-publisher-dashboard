@@ -40,14 +40,17 @@ const Packages: React.FC = () => {
 
   const numberOfPackages = useMemo(() => packages.length, [packages]);
 
+  const numberOfPackagesText = useMemo(
+    () => getQuantitativeText(numberOfPackages, 'package'),
+    [numberOfPackages],
+  );
+
   return (
     <Container>
       <Header>
         <Title>Published packages</Title>
         {numberOfPackages > 0 && (
-          <TotalEntries>
-            {getQuantitativeText(numberOfPackages, 'package')}
-          </TotalEntries>
+          <TotalEntries>{numberOfPackagesText}</TotalEntries>
         )}
       </Header>
 

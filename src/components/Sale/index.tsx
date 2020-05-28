@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Modal from 'react-native-modal';
 import ISale from '../../models/sales/ISale';
 import getQuantitativeText from '../../utils/getQuantitativeText';
@@ -47,15 +47,28 @@ const Sale: React.FC<ISaleProps> = ({ sale }) => {
     { key: 'Chargebacks', value: chargebacks },
   ];
 
+  const formattedCurrentPrice = useMemo(() => formatPrice(price, false), [
+    price,
+  ]);
+
+  const salesQuantityText = useMemo(
+    () => getQuantitativeText(quantity, 'sale'),
+    [quantity],
+  );
+
+  const formattedGrossValue = useMemo(() => formatPrice(gross), [gross]);
+
+  const formattedNetValue = useMemo(() => formatPrice(net), [net]);
+
   return (
     <Container>
       <PackageName>{package_name}</PackageName>
-      <Price>{formatPrice(price, false)}</Price>
+      <Price>{formattedCurrentPrice}</Price>
       <Row>
-        <Quantity>{getQuantitativeText(quantity, 'sale')}</Quantity>
+        <Quantity>{salesQuantityText}</Quantity>
         <Currencies>
-          <Gross>{formatPrice(gross)}</Gross>
-          <Net>{formatPrice(net)}</Net>
+          <Gross>{formattedGrossValue}</Gross>
+          <Net>{formattedNetValue}</Net>
         </Currencies>
       </Row>
       <Separator />

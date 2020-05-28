@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { FlatList } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 
@@ -43,15 +43,16 @@ const Reviews: React.FC = () => {
     loadReviews();
   }, [params]);
 
+  const totalReviewsText = useMemo(
+    () => getQuantitativeText(totalEntries, 'review'),
+    [totalEntries],
+  );
+
   return (
     <Container>
       <Header>
         <Title>{params?.name}</Title>
-        {totalEntries > 0 && (
-          <TotalEntries>
-            {getQuantitativeText(totalEntries, 'review')}
-          </TotalEntries>
-        )}
+        {totalEntries > 0 && <TotalEntries>{totalReviewsText}</TotalEntries>}
       </Header>
 
       {isLoading ? (

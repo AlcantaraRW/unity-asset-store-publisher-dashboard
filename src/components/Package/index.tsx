@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Modal from 'react-native-modal';
@@ -60,10 +60,12 @@ const Package: React.FC<IPackageProps> = ({ info }) => {
     });
   }
 
+  const priceWithDollarSign = useMemo(() => `$${price}`, [price]);
+
   return (
     <Container>
       <PackageName>{name}</PackageName>
-      <Price>{`$${price}`}</Price>
+      <Price>{priceWithDollarSign}</Price>
       <Row>
         <Version>{version_name}</Version>
         <Rate value={average_rating} />
