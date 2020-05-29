@@ -1,24 +1,21 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   DrawerContentComponentProps,
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
 
-import { TouchableOpacity, Text } from 'react-native';
 import { Container, Avatar, Header, PublisherName, Separator } from './styles';
+import { useAuth } from '../../hooks/auth';
 
 const Sidebar: React.FC<DrawerContentComponentProps> = ({ ...props }) => {
+  const { publisher } = useAuth();
+
   return (
     <Container>
       <Header>
-        <Avatar
-          source={{
-            uri:
-              'http://assetstorev1-prd-cdn.unity3d.com/key-image/5167477e-166e-4dca-9e13-9e58c4cc39e5.png',
-          }}
-        />
-        <PublisherName>Primordium Game Studio</PublisherName>
+        <Avatar source={{ uri: publisher?.avatar_url }} />
+        <PublisherName>{publisher?.name}</PublisherName>
       </Header>
 
       <DrawerItemList {...props} />
@@ -30,4 +27,4 @@ const Sidebar: React.FC<DrawerContentComponentProps> = ({ ...props }) => {
   );
 };
 
-export default Sidebar;
+export default memo(Sidebar);

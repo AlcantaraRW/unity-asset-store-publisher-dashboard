@@ -3,16 +3,14 @@ import { FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Modal from 'react-native-modal';
 import Picker from '../../components/Picker';
-import api from '../../services/api';
-import SaleResponseTransformer from '../../utils/responseTransformers/SaleResponseTransformer';
 import IKeyValuePair from '../../models/IKeyValuePair';
-import IUnityMonthsResponse from '../../models/responses/IUnityMonthsResponse';
 import ISalesSummary from '../../models/sales/ISalesSummary';
 import Sale from '../../components/Sale';
 import getQuantitativeText from '../../utils/getQuantitativeText';
 import formatPrice from '../../utils/formatPrice';
 import Loader from '../../components/Loader';
 import Center from '../../components/Center';
+import ApiClient from '../../services/ApiClient';
 
 import {
   Container,
@@ -35,44 +33,37 @@ const Sales: React.FC = () => {
   const [availableMonths, setAvailableMonths] = useState<IKeyValuePair[]>([]);
   const [salesSummary, setSalesSummary] = useState<ISalesSummary>();
   const [showModal, setShowModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingMonths, setIsLoadingMonths] = useState(true);
+  const [isLoadingSales, setIsLoadingSales] = useState(false);
 
   useEffect(() => {
-    async function loadMonths(): Promise<void> {
-      const response = await api.get<IUnityMonthsResponse>(
-        'publisher-info/months/30954.json',
-      );
-
-      if (response) {
-        const months: IKeyValuePair[] = response.data.periods.map(period => ({
-          key: period.name,
-          value: period.value,
-        }));
-
+    ApiClient.getAvailableMonths().then(months => {
+      if (months) {
         setAvailableMonths(months);
         setSelectedMonth(months[0]);
       }
-    }
 
-    loadMonths();
+      setIsLoadingMonths(false);
+    });
   }, []);
 
   useEffect(() => {
-    async function loadSales(): Promise<void> {
-      setIsLoading(true);
-
-      const response = await api.get(
-        `publisher-info/sales/30954/${selectedMonth?.value}.json`,
-      );
-
-      const summary = SaleResponseTransformer.transform(response.data);
-      setSalesSummary(summary);
-
-      setIsLoading(false);
+    if (!availableMonths.length || !selectedMonth) {
+      return;
     }
 
-    loadSales();
-  }, [selectedMonth]);
+    setIsLoadingSales(true);
+
+    ApiClient.getSalesFromMonth(selectedMonth.value).then(summary => {
+      setSalesSummary(summary);
+      setIsLoadingSales(false);
+    });
+  }, [availableMonths, selectedMonth]);
+
+  const isLoading = useMemo(() => isLoadingMonths || isLoadingSales, [
+    isLoadingMonths,
+    isLoadingSales,
+  ]);
 
   function handleItemSelected(item: IKeyValuePair): void {
     setSelectedMonth(item);
@@ -145,7 +136,9 @@ const Sales: React.FC = () => {
 
       {isLoading ? (
         <Center>
-          <Loader message="Loading sales..." />
+          <Loader
+            message={`Loading ${isLoadingSales ? 'sales' : 'months'}...`}
+          />
         </Center>
       ) : (
         <ListContainer>
@@ -159,7 +152,7 @@ const Sales: React.FC = () => {
         </ListContainer>
       )}
 
-      {!isLoading && !!salesSummary && (
+      {!isLoadingSales && !!salesSummary && (
         <Footer>
           <Quantity>{totalQuantityText}</Quantity>
           <Currencies>
