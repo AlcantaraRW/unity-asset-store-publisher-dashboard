@@ -1,11 +1,17 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import IUnityPublisherOverviewResponse from '../models/responses/IUnityPublisherOverviewResponse';
 import IPublisher from '../models/responses/overview/IPublisher';
 import IUnityMonthsResponse from '../models/responses/IUnityMonthsResponse';
+import IUnityPackagesResponse from '../models/responses/IUnityPackagesResponse';
 import IKeyValuePair from '../models/IKeyValuePair';
 import IUnitySalesResponse from '../models/responses/IUnitySalesResponse';
 import SaleResponseTransformer from '../utils/responseTransformers/SaleResponseTransformer';
 import ISalesSummary from '../models/sales/ISalesSummary';
+import IPackage from '../models/packages/IPackage';
+import PackageResponseTransformer from '../utils/responseTransformers/PackageResponseTransformer';
+import IReviewResponse from '../models/reviews/IReviewResponse';
+import IUnityReviewsResponse from '../models/responses/IUnityReviewsResponse';
+import ReviewResponseTransformer from '../utils/responseTransformers/ReviewResponseTransformer';
 
 class ApiClient {
   private client: AxiosInstance;
@@ -43,8 +49,6 @@ class ApiClient {
       Cookie: `kharma_session=${kharma_session}; kharma_token=${kharma_token}`,
     };
 
-    console.log({ kharma_session, kharma_token });
-
     return this.getPublisherInfo();
   }
 
@@ -67,6 +71,26 @@ class ApiClient {
     );
 
     const transformedData = SaleResponseTransformer.transform(response.data);
+
+    return transformedData;
+  }
+
+  async getPublishedPackages(): Promise<IPackage[]> {
+    const response = await this.client.get<IUnityPackagesResponse>(
+      'management/packages.json',
+    );
+
+    const transformedData = PackageResponseTransformer.transform(response.data);
+
+    return transformedData;
+  }
+
+  async getReviewsFromPackage(package_id: string): Promise<IReviewResponse> {
+    const response = await this.client.get<IUnityReviewsResponse>(
+      `publisher-info/reviews/${this.loggedPublisher?.id}.json?page=1&rows=20&order_key=date&sort=desc&asset_filter=${package_id}`,
+    );
+
+    const transformedData = ReviewResponseTransformer.transform(response.data);
 
     return transformedData;
   }

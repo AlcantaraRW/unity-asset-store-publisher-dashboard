@@ -5,9 +5,13 @@ import SignInStackRoutes from './SignInStack';
 import { useAuth } from '../hooks/auth';
 
 const DefaultRoutes: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoadingAuthData } = useAuth();
 
-  return isAuthenticated() ? <DrawerRoutes /> : <SignInStackRoutes />;
+  return isLoadingAuthData ? null : isAuthenticated() ? (
+    <DrawerRoutes />
+  ) : (
+    <SignInStackRoutes />
+  );
 };
 
 export default DefaultRoutes;

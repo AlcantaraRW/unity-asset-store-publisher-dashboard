@@ -39,6 +39,8 @@ const SignIn: React.FC = () => {
 
       <AssetStoreWebView
         source={{ uri }}
+        sharedCookiesEnabled
+        thirdPartyCookiesEnabled
         renderLoading={() => <Loader message="Loading webview..." />}
       />
     </>

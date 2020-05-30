@@ -2,9 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { FlatList } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
 
-import api from '../../services/api';
 import Review from '../../components/Review';
-import ReviewResponseTransformer from '../../utils/responseTransformers/ReviewResponseTransformer';
 import IReview from '../../models/reviews/IReview';
 import getQuantitativeText from '../../utils/getQuantitativeText';
 import Center from '../../components/Center';
@@ -17,6 +15,7 @@ import {
   TotalEntries,
   ListContainer,
 } from './styles';
+import ApiClient from '../../services/ApiClient';
 
 type ReviewsRouteProp = RouteProp<
   {
@@ -37,17 +36,11 @@ const Reviews: React.FC = () => {
 
   useEffect(() => {
     async function loadReviews(): Promise<void> {
-      const response = await api.get(
-        `publisher-info/reviews/30954.json?page=1&rows=20&order_key=date&sort=desc&asset_filter=${params.package_id}`,
-      );
-
-      const transformedData = ReviewResponseTransformer.transform(
-        response.data,
-      );
-
-      setTotalEntries(transformedData.total_entries);
-      setReviews(transformedData.reviews);
-      setIsLoading(false);
+      ApiClient.getReviewsFromPackage(params.package_id).then(response => {
+        setTotalEntries(response.total_entries);
+        setReviews(response.reviews);
+        setIsLoading(false);
+      });
     }
 
     loadReviews();

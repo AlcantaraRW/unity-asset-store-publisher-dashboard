@@ -9,7 +9,7 @@ interface IUnityPackageVersion {
   status: string;
 }
 
-export default interface IPackageRawResponse {
+export default interface IUnityPackagesResponse {
   packages: Array<{
     average_rating: string;
     versions: IUnityPackageVersion[];

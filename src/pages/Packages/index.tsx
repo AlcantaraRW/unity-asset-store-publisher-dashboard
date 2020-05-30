@@ -11,13 +11,11 @@ import {
 } from './styles';
 
 import Package from '../../components/Package';
-
-import api from '../../services/api';
-import PackageResponseTransformer from '../../utils/responseTransformers/PackageResponseTransformer';
 import IPackage from '../../models/packages/IPackage';
 import getQuantitativeText from '../../utils/getQuantitativeText';
 import Center from '../../components/Center';
 import Loader from '../../components/Loader';
+import ApiClient from '../../services/ApiClient';
 
 const Packages: React.FC = () => {
   const [packages, setPackages] = useState<IPackage[]>([]);
@@ -25,14 +23,10 @@ const Packages: React.FC = () => {
 
   useEffect(() => {
     async function loadPackages(): Promise<void> {
-      const response = await api.get('management/packages.json');
-
-      const transformedData = PackageResponseTransformer.transform(
-        response.data,
-      );
-
-      setPackages(transformedData);
-      setIsLoading(false);
+      ApiClient.getPublishedPackages().then(packageList => {
+        setPackages(packageList);
+        setIsLoading(false);
+      });
     }
 
     loadPackages();

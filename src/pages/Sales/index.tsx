@@ -27,6 +27,8 @@ import {
   Gross,
   Net,
 } from './styles';
+import api from '../../services/api';
+import IUnityMonthsResponse from '../../models/responses/IUnityMonthsResponse';
 
 const Sales: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<IKeyValuePair>();
@@ -42,7 +44,6 @@ const Sales: React.FC = () => {
         setAvailableMonths(months);
         setSelectedMonth(months[0]);
       }
-
       setIsLoadingMonths(false);
     });
   }, []);
