@@ -1,5 +1,9 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import Colors from '../../utils/colors';
+
+interface IAdjacentMonthButtonProps {
+  shouldHideButton: boolean;
+}
 
 export const Container = styled.SafeAreaView`
   flex: 1;
@@ -16,8 +20,16 @@ export const Header = styled.View.attrs({
   padding: 15px;
 `;
 
-export const PreviousMonthButton = styled.TouchableOpacity`
+export const PreviousMonthButton = styled.TouchableOpacity<
+  IAdjacentMonthButtonProps
+>`
   padding-right: 15px;
+
+  ${props =>
+    props.shouldHideButton &&
+    css`
+      opacity: 0;
+    `}
 `;
 
 export const PickMonthButton = styled.TouchableOpacity``;
@@ -28,8 +40,16 @@ export const SelectedMonth = styled.Text`
   border-bottom-width: 2px;
 `;
 
-export const NextMonthButton = styled.TouchableOpacity`
+export const NextMonthButton = styled.TouchableOpacity<
+  IAdjacentMonthButtonProps
+>`
   padding-left: 15px;
+
+  ${props =>
+    props.shouldHideButton &&
+    css`
+      opacity: 0;
+    `}
 `;
 
 export const ListContainer = styled.View`

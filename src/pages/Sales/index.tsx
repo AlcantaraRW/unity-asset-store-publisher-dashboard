@@ -27,8 +27,6 @@ import {
   Gross,
   Net,
 } from './styles';
-import api from '../../services/api';
-import IUnityMonthsResponse from '../../models/responses/IUnityMonthsResponse';
 
 const Sales: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<IKeyValuePair>();
@@ -95,6 +93,15 @@ const Sales: React.FC = () => {
     setSelectedMonth(availableMonths[index - 1]);
   }
 
+  const shouldHidePreviousMonthButton = useMemo(() => {
+    const lastIndex = availableMonths.length - 1;
+    return selectedMonth === availableMonths[lastIndex];
+  }, [availableMonths, selectedMonth]);
+
+  const shouldHideNextMonthButton = useMemo(() => {
+    return selectedMonth === availableMonths[0];
+  }, [availableMonths, selectedMonth]);
+
   const totalQuantityText = useMemo(() => {
     if (salesSummary) {
       return getQuantitativeText(salesSummary.totals.quantity, 'sale');
@@ -122,7 +129,11 @@ const Sales: React.FC = () => {
   return (
     <Container>
       <Header>
-        <PreviousMonthButton onPress={handlePreviousMonth}>
+        <PreviousMonthButton
+          shouldHideButton={shouldHidePreviousMonthButton}
+          disabled={shouldHidePreviousMonthButton}
+          onPress={handlePreviousMonth}
+        >
           <Icon name="chevron-left" size={25} />
         </PreviousMonthButton>
 
@@ -130,7 +141,11 @@ const Sales: React.FC = () => {
           <SelectedMonth>{selectedMonth?.key}</SelectedMonth>
         </PickMonthButton>
 
-        <NextMonthButton onPress={handleNextMonth}>
+        <NextMonthButton
+          shouldHideButton={shouldHideNextMonthButton}
+          disabled={shouldHideNextMonthButton}
+          onPress={handleNextMonth}
+        >
           <Icon name="chevron-right" size={25} />
         </NextMonthButton>
       </Header>
