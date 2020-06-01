@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, memo } from 'react';
 import { Linking } from 'react-native';
 import Modal from 'react-native-modal';
 import Rate from '../Rate';
@@ -66,4 +66,4 @@ const Review: React.FC<IReviewProps> = ({ review }) => {
   );
 };
 
-export default Review;
+export default memo(Review);

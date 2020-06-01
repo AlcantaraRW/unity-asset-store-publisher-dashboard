@@ -85,9 +85,12 @@ class ApiClient {
     return transformedData;
   }
 
-  async getReviewsFromPackage(package_id: string): Promise<IReviewResponse> {
+  async getReviewsFromPackage(
+    package_id: string,
+    page: number,
+  ): Promise<IReviewResponse> {
     const response = await this.client.get<IUnityReviewsResponse>(
-      `publisher-info/reviews/${this.loggedPublisher?.id}.json?page=1&rows=20&order_key=date&sort=desc&asset_filter=${package_id}`,
+      `publisher-info/reviews/${this.loggedPublisher?.id}.json?page=${page}&rows=20&order_key=date&sort=desc&asset_filter=${package_id}`,
     );
 
     const transformedData = ReviewResponseTransformer.transform(response.data);

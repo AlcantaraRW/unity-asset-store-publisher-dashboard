@@ -28,23 +28,35 @@ type ReviewsRouteProp = RouteProp<
 >;
 
 const Reviews: React.FC = () => {
-  const [reviews, setReviews] = useState<IReview[]>([]);
-  const [totalEntries, setTotalEntries] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [lastPage, setLastPage] = useState<number | undefined>();
+  const [totalEntries, setTotalEntries] = useState(0);
+  const [reviews, setReviews] = useState<IReview[]>([]);
 
   const { params } = useRoute<ReviewsRouteProp>();
 
-  useEffect(() => {
-    async function loadReviews(): Promise<void> {
-      ApiClient.getReviewsFromPackage(params.package_id).then(response => {
-        setTotalEntries(response.total_entries);
-        setReviews(response.reviews);
-        setIsLoading(false);
-      });
+  async function loadReviews(): Promise<void> {
+    const response = await ApiClient.getReviewsFromPackage(
+      params.package_id,
+      currentPage,
+    );
+
+    if (currentPage > (lastPage || 999)) {
+      return;
     }
 
+    setLastPage(response.last_page);
+    setCurrentPage(currentPage + 1);
+    setTotalEntries(response.total_entries);
+    setReviews(oldReviews => [...oldReviews, ...response.reviews]);
+    setIsLoading(false);
+  }
+
+  useEffect(() => {
     loadReviews();
-  }, [params]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const totalReviewsText = useMemo(
     () => getQuantitativeText(totalEntries, 'review'),
@@ -69,6 +81,8 @@ const Reviews: React.FC = () => {
             keyExtractor={item => item.review_id}
             renderItem={({ item }) => <Review review={item} />}
             showsVerticalScrollIndicator={false}
+            onEndReachedThreshold={0.5}
+            onEndReached={loadReviews}
           />
         </ListContainer>
       )}
