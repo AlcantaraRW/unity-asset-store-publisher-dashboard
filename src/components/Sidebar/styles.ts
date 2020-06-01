@@ -1,4 +1,6 @@
 import styled from 'styled-components/native';
+import { DrawerItem } from '@react-navigation/drawer';
+
 import Colors from '../../utils/colors';
 
 export const Container = styled.View`
@@ -32,3 +34,13 @@ export const Separator = styled.View`
   border-top-color: ${Colors.LINE};
   margin: 15px 0;
 `;
+
+export const DrawerOption = styled(DrawerItem).attrs({
+  activeBackgroundColor: Colors.LIGHT_GRAY,
+  activeTintColor: Colors.VERY_DARK_GRAY,
+  inactiveTintColor: Colors.VERY_DARK_GRAY,
+  labelStyle: {
+    fontSize: 16,
+    marginHorizontal: -20,
+  },
+})``;

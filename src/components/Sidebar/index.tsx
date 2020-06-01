@@ -1,15 +1,37 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
+import { Alert } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import {
   DrawerContentComponentProps,
   DrawerItemList,
-  DrawerItem,
 } from '@react-navigation/drawer';
 
-import { Container, Avatar, Header, PublisherName, Separator } from './styles';
 import { useAuth } from '../../hooks/auth';
 
+import {
+  Container,
+  Avatar,
+  Header,
+  PublisherName,
+  Separator,
+  DrawerOption,
+} from './styles';
+
 const Sidebar: React.FC<DrawerContentComponentProps> = ({ ...props }) => {
-  const { publisher } = useAuth();
+  const { publisher, clearCredentials } = useAuth();
+
+  const confirmLogout = useCallback(() => {
+    Alert.alert('Confirm', 'Are you sure you want to logout?', [
+      {
+        text: 'No',
+      },
+      {
+        text: 'Yes',
+        onPress: clearCredentials,
+      },
+    ]);
+  }, [clearCredentials]);
 
   return (
     <Container>
@@ -22,7 +44,11 @@ const Sidebar: React.FC<DrawerContentComponentProps> = ({ ...props }) => {
 
       <Separator />
 
-      <DrawerItem label="Test..." onPress={() => console.log('Tested!')} />
+      <DrawerOption
+        label="Logout"
+        onPress={confirmLogout}
+        icon={() => <Icon name="logout-variant" size={25} />}
+      />
     </Container>
   );
 };
