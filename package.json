@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "clean": "cd .\\android\\ && .\\gradlew clean",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
@@ -27,6 +28,7 @@
     "react-native-screens": "^2.7.0",
     "react-native-vector-icons": "^6.6.0",
     "react-native-webview": "^10.1.1",
+    "realm": "^6.0.1",
     "styled-components": "^5.1.0"
   },
   "devDependencies": {

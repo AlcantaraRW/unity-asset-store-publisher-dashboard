@@ -10,7 +10,7 @@ import getQuantitativeText from '../../utils/getQuantitativeText';
 import formatPrice from '../../utils/formatPrice';
 import Loader from '../../components/Loader';
 import Center from '../../components/Center';
-import ApiClient from '../../services/ApiClient';
+import DataProvider from '../../services/DataProvider';
 
 import {
   Container,
@@ -27,6 +27,8 @@ import {
   Gross,
   Net,
 } from './styles';
+import getRealm from '../../services/RealmService';
+import SalesSummary from '../../schemas/SalesSummary';
 
 const Sales: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<IKeyValuePair>();
@@ -37,7 +39,7 @@ const Sales: React.FC = () => {
   const [isLoadingSales, setIsLoadingSales] = useState(false);
 
   useEffect(() => {
-    ApiClient.getAvailableMonths().then(months => {
+    DataProvider.getAvailableMonths().then(months => {
       if (months) {
         setAvailableMonths(months);
         setSelectedMonth(months[0]);
@@ -47,16 +49,20 @@ const Sales: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!availableMonths.length || !selectedMonth) {
-      return;
-    }
+    async function load(): Promise<void> {
+      if (!availableMonths.length || !selectedMonth) {
+        return;
+      }
 
-    setIsLoadingSales(true);
+      setIsLoadingSales(true);
 
-    ApiClient.getSalesFromMonth(selectedMonth.value).then(summary => {
+      const summary = await DataProvider.getSalesFromMonth(selectedMonth.value);
+
       setSalesSummary(summary);
       setIsLoadingSales(false);
-    });
+    }
+
+    load();
   }, [availableMonths, selectedMonth]);
 
   const isLoading = useMemo(() => isLoadingMonths || isLoadingSales, [

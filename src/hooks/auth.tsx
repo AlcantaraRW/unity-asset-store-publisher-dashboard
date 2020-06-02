@@ -8,7 +8,7 @@ import React, {
 
 import AsyncStorage from '@react-native-community/async-storage';
 import IPublisher from '../models/responses/overview/IPublisher';
-import ApiClient from '../services/ApiClient';
+import DataProvider from '../services/DataProvider';
 
 interface IAuthData {
   kharma_session: string;
@@ -41,7 +41,7 @@ const AuthProvider: React.FC = ({ children }) => {
       const kharma_token = token[1];
 
       if (!!kharma_session && !!kharma_token) {
-        const publisher = await ApiClient.setAuthCookies(
+        const publisher = await DataProvider.setAuthCookies(
           kharma_session,
           kharma_token,
         );
@@ -62,7 +62,7 @@ const AuthProvider: React.FC = ({ children }) => {
         ['kharma_token', kharma_token],
       ]);
 
-      const publisher = await ApiClient.setAuthCookies(
+      const publisher = await DataProvider.setAuthCookies(
         kharma_session,
         kharma_token,
       );

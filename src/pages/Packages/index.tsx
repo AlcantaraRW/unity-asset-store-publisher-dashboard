@@ -15,7 +15,7 @@ import IPackage from '../../models/packages/IPackage';
 import getQuantitativeText from '../../utils/getQuantitativeText';
 import Center from '../../components/Center';
 import Loader from '../../components/Loader';
-import ApiClient from '../../services/ApiClient';
+import DataProvider from '../../services/DataProvider';
 
 const Packages: React.FC = () => {
   const [packages, setPackages] = useState<IPackage[]>([]);
@@ -23,7 +23,7 @@ const Packages: React.FC = () => {
 
   useEffect(() => {
     async function loadPackages(): Promise<void> {
-      ApiClient.getPublishedPackages().then(packageList => {
+      DataProvider.getPublishedPackages().then(packageList => {
         setPackages(packageList);
         setIsLoading(false);
       });

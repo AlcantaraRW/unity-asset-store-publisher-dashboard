@@ -15,7 +15,7 @@ import {
   TotalEntries,
   ListContainer,
 } from './styles';
-import ApiClient from '../../services/ApiClient';
+import DataProvider from '../../services/DataProvider';
 
 type ReviewsRouteProp = RouteProp<
   {
@@ -37,7 +37,7 @@ const Reviews: React.FC = () => {
   const { params } = useRoute<ReviewsRouteProp>();
 
   async function loadReviews(): Promise<void> {
-    const response = await ApiClient.getReviewsFromPackage(
+    const response = await DataProvider.getReviewsFromPackage(
       params.package_id,
       currentPage,
     );
