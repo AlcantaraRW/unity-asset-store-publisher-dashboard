@@ -43,8 +43,8 @@ const Sale: React.FC<ISaleProps> = ({ sale }) => {
   const details: IKeyValuePair[] = [
     { key: 'First sale', value: formatDate(first_sale) },
     { key: 'Last sale', value: formatDate(last_sale) },
-    { key: 'Refunds', value: refunds },
-    { key: 'Chargebacks', value: chargebacks },
+    { key: 'Refunds', value: refunds.toString() },
+    { key: 'Chargebacks', value: chargebacks.toString() },
   ];
 
   const formattedCurrentPrice = useMemo(() => formatPrice(price, false), [

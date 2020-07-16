@@ -15,7 +15,7 @@ const DetailsModal: React.FC<IDetailsModalProps> = ({
   return (
     <Container>
       {details.map(detail => (
-        <Detail key={detail.key}>
+        <Detail key={detail.key} testID="detail-item">
           <Title>{detail.key}</Title>
           <Value>{detail.value}</Value>
         </Detail>

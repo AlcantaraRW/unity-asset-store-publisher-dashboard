@@ -15,14 +15,14 @@ import {
 
 interface IPickerProps {
   items: IKeyValuePair[];
-  onItemClicked(item: IKeyValuePair): void;
-  onCancelClicked(): void;
+  onItemPressed(item: IKeyValuePair): void;
+  onCancelPressed(): void;
 }
 
 const Picker: React.FC<IPickerProps> = ({
   items,
-  onItemClicked,
-  onCancelClicked,
+  onItemPressed,
+  onCancelPressed,
 }) => {
   return (
     <Container>
@@ -31,7 +31,7 @@ const Picker: React.FC<IPickerProps> = ({
           data={items}
           keyExtractor={item => item.key}
           renderItem={({ item }) => (
-            <Option key={item.key} onPress={() => onItemClicked(item)}>
+            <Option key={item.key} onPress={() => onItemPressed(item)}>
               <OptionText>{item.key}</OptionText>
             </Option>
           )}
@@ -42,7 +42,7 @@ const Picker: React.FC<IPickerProps> = ({
 
       <Separator />
 
-      <CancelButton onPress={onCancelClicked}>
+      <CancelButton onPress={onCancelPressed}>
         <CancelButtonText>CANCEL</CancelButtonText>
       </CancelButton>
     </Container>

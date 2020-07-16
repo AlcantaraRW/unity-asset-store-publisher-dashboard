@@ -43,7 +43,6 @@ const Package: React.FC<IPackageProps> = ({ info }) => {
 
   const details: IKeyValuePair[] = [
     { key: 'Package ID', value: package_id },
-    { key: 'Version', value: version_name },
     { key: 'Size', value: formatPackageSize(size) },
     { key: 'Created at', value: formatDate(created) },
     { key: 'Modified at', value: formatDate(modified) },
@@ -85,7 +84,7 @@ const Package: React.FC<IPackageProps> = ({ info }) => {
         </Button>
       </ButtonsContainer>
 
-      <Modal isVisible={showModal}>
+      <Modal isVisible={showModal} testID="modal">
         <DetailsModal
           details={details}
           onButtonPressed={() => setShowModal(false)}

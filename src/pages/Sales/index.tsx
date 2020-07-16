@@ -186,8 +186,8 @@ const Sales: React.FC = () => {
         {availableMonths.length > 0 && (
           <Picker
             items={availableMonths}
-            onItemClicked={handleItemSelected}
-            onCancelClicked={() => setShowModal(false)}
+            onItemPressed={handleItemSelected}
+            onCancelPressed={() => setShowModal(false)}
           />
         )}
       </Modal>
