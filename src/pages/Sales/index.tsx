@@ -27,8 +27,6 @@ import {
   Gross,
   Net,
 } from './styles';
-import getRealm from '../../services/RealmService';
-import SalesSummary from '../../schemas/SalesSummary';
 
 const Sales: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<IKeyValuePair>();
