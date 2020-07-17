@@ -74,8 +74,8 @@
       "src/components/**/*.tsx",
       "src/pages/**/*.tsx",
       "src/hooks/**/*.tsx",
-      "src/services/**/*.tsx",
-      "src/utils/**/*.tsx"
+      "src/services/**/*.ts",
+      "src/utils/**/*.ts"
     ],
     "moduleFileExtensions": [
       "ts",

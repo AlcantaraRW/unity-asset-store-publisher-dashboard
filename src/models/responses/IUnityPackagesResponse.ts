@@ -11,7 +11,7 @@ interface IUnityPackageVersion {
 
 export default interface IUnityPackagesResponse {
   packages: Array<{
-    average_rating: string;
+    average_rating: string | null;
     versions: IUnityPackageVersion[];
     short_url: string;
   }>;
