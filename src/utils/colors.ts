@@ -6,6 +6,7 @@ enum Colors {
   DARK_GRAY = '#9E9E9E',
   VERY_DARK_GRAY = '#333',
   LINE = 'rgba(153, 153, 153, 0.4)',
+  DANGER = '#DC3545',
 }
 
 export default Colors;
