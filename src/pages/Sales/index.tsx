@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { FlatList } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Modal from 'react-native-modal';
 import Picker from '../../components/Picker';
 import IKeyValuePair from '../../models/IKeyValuePair';
@@ -16,9 +15,11 @@ import {
   Container,
   Header,
   PreviousMonthButton,
+  PreviousMonthIcon,
   PickMonthButton,
   SelectedMonth,
   NextMonthButton,
+  NextMonthIcon,
   ListContainer,
   ListSeparator,
   Footer,
@@ -138,7 +139,7 @@ const Sales: React.FC = () => {
           disabled={shouldHidePreviousMonthButton}
           onPress={handlePreviousMonth}
         >
-          <Icon name="chevron-left" size={25} />
+          <PreviousMonthIcon />
         </PreviousMonthButton>
 
         <PickMonthButton onPress={() => setShowModal(true)}>
@@ -150,7 +151,7 @@ const Sales: React.FC = () => {
           disabled={shouldHideNextMonthButton}
           onPress={handleNextMonth}
         >
-          <Icon name="chevron-right" size={25} />
+          <NextMonthIcon />
         </NextMonthButton>
       </Header>
 

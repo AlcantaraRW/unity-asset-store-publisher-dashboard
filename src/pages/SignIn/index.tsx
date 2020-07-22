@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CookieManager from '@react-native-community/cookies';
-
-import { Header, IconContainer, AppName, AssetStoreWebView } from './styles';
 import Loader from '../../components/Loader';
-import Colors from '../../utils/colors';
 import { useAuth } from '../../hooks/auth';
+
+import {
+  Header,
+  IconContainer,
+  AppIcon,
+  AppName,
+  AssetStoreWebView,
+} from './styles';
 
 const uri = 'https://publisher.assetstore.unity3d.com';
 
@@ -32,7 +36,7 @@ const SignIn: React.FC = () => {
     <>
       <Header>
         <IconContainer>
-          <Icon name="cube-outline" size={40} color={Colors.VERY_DARK_GRAY} />
+          <AppIcon />
         </IconContainer>
         <AppName>Unity Asset Store Publisher Dashboard</AppName>
       </Header>

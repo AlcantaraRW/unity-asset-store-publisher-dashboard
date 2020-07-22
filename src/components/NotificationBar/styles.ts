@@ -1,13 +1,12 @@
 import styled from 'styled-components/native';
-import Colors from '../../utils/colors';
 
 export const Container = styled.View`
   height: 25px;
-  background-color: ${Colors.DANGER};
+  background-color: ${({ theme }) => theme.colors.danger};
   justify-content: center;
   align-items: center;
 `;
 
 export const Message = styled.Text`
-  color: ${Colors.WHITE};
+  color: ${({ theme }) => theme.colors.white};
 `;

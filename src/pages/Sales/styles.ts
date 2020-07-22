@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components/native';
-import Colors from '../../utils/colors';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface IAdjacentMonthButtonProps {
   shouldHideButton: boolean;
@@ -7,7 +7,7 @@ interface IAdjacentMonthButtonProps {
 
 export const Container = styled.SafeAreaView`
   flex: 1;
-  background: ${Colors.LIGHT_GRAY};
+  background-color: ${({ theme }) => theme.colors.primary};
   position: relative;
 `;
 
@@ -32,11 +32,22 @@ export const PreviousMonthButton = styled.TouchableOpacity<
     `}
 `;
 
+const SelectMonthIcon = styled(Icon).attrs(({ theme }) => ({
+  size: 25,
+  color: theme.text.primary,
+}))``;
+
+export const PreviousMonthIcon = styled(SelectMonthIcon).attrs({
+  name: 'chevron-left',
+})``;
+
 export const PickMonthButton = styled.TouchableOpacity``;
 
 export const SelectedMonth = styled.Text`
   font-size: 20px;
   font-weight: bold;
+  color: ${({ theme }) => theme.text.primary};
+  border-bottom-color: ${({ theme }) => theme.text.primary};
   border-bottom-width: 2px;
 `;
 
@@ -52,6 +63,10 @@ export const NextMonthButton = styled.TouchableOpacity<
     `}
 `;
 
+export const NextMonthIcon = styled(SelectMonthIcon).attrs({
+  name: 'chevron-right',
+})``;
+
 export const ListContainer = styled.View`
   margin: 0 15px 108px;
 `;
@@ -65,7 +80,7 @@ export const Footer = styled.View`
   margin-top: 200px;
   justify-content: space-between;
   padding: 13px 20px;
-  background-color: ${Colors.VERY_LIGHT_GRAY};
+  background-color: ${({ theme }) => theme.colors.primaryDark};
   position: absolute;
   left: 0;
   bottom: 0;
@@ -73,7 +88,7 @@ export const Footer = styled.View`
 `;
 
 export const Quantity = styled.Text`
-  color: ${Colors.VERY_DARK_GRAY};
+  color: ${({ theme }) => theme.text.primary};
   font-size: 20px;
 `;
 
@@ -83,13 +98,13 @@ export const Currencies = styled.View`
 `;
 
 export const Gross = styled.Text`
-  color: ${Colors.DARK_GRAY};
+  color: ${({ theme }) => theme.text.secondary};
   font-size: 18px;
   margin-right: 5px;
 `;
 
 export const Net = styled.Text`
-  color: ${Colors.VERY_DARK_GRAY};
+  color: ${({ theme }) => theme.text.primary};
   font-size: 20px;
   font-weight: bold;
 `;

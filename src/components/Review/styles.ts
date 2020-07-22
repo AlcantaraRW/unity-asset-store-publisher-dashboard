@@ -1,17 +1,16 @@
 import styled from 'styled-components/native';
-import Colors from '../../utils/colors';
 
 export const Container = styled.View.attrs({
   elevation: 2,
 })`
-  background: ${Colors.WHITE};
+  background-color: ${({ theme }) => theme.colors.primaryLight};
   border-radius: 10px;
   padding: 15px 18px;
   margin-bottom: 10px;
 `;
 
 export const Subject = styled.Text`
-  color: ${Colors.VERY_DARK_GRAY};
+  color: ${({ theme }) => theme.text.primary};
   font-size: 20px;
 `;
 
@@ -23,7 +22,7 @@ export const Row = styled.View`
 `;
 
 export const Date = styled.Text`
-  color: ${Colors.DARK_GRAY};
+  color: ${({ theme }) => theme.text.secondary};
   font-size: 13px;
   margin-left: 5px;
 `;
@@ -31,14 +30,14 @@ export const Date = styled.Text`
 export const Content = styled.Text.attrs({
   numberOfLines: 3,
 })`
-  color: ${Colors.DARK_GRAY};
+  color: ${({ theme }) => theme.text.secondary};
   font-size: 15px;
   font-style: italic;
 `;
 
 export const Separator = styled.View`
   border-top-width: 1px;
-  border-top-color: ${Colors.LINE};
+  border-top-color: ${({ theme }) => theme.colors.line};
   margin: 10px 0;
 `;
 
@@ -55,6 +54,6 @@ export const Button = styled.TouchableOpacity`
 `;
 
 export const ButtonText = styled.Text`
-  color: ${Colors.VIVID_BLUE};
+  color: ${({ theme }) => theme.colors.highlight};
   font-size: 13px;
 `;

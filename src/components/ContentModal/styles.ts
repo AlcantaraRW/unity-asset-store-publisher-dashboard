@@ -1,10 +1,9 @@
 import styled from 'styled-components/native';
-import Colors from '../../utils/colors';
 
 export const Container = styled.View.attrs({
   elevation: 2,
 })`
-  background: ${Colors.WHITE};
+  background-color: ${({ theme }) => theme.colors.primaryLight};
   border-radius: 10px;
   padding: 5px 18px;
   margin-bottom: 5px;
@@ -12,7 +11,7 @@ export const Container = styled.View.attrs({
 `;
 
 export const Content = styled.Text`
-  color: ${Colors.DARK_GRAY};
+  color: ${({ theme }) => theme.text.secondary};
   font-size: 15px;
   font-style: italic;
   margin: 10px 0;
@@ -20,7 +19,7 @@ export const Content = styled.Text`
 
 export const Separator = styled.View`
   border-top-width: 1px;
-  border-top-color: ${Colors.LINE};
+  border-top-color: ${({ theme }) => theme.colors.line};
 `;
 
 export const Button = styled.TouchableOpacity`
@@ -30,6 +29,6 @@ export const Button = styled.TouchableOpacity`
 `;
 
 export const ButtonText = styled.Text`
-  color: ${Colors.VIVID_BLUE};
+  color: ${({ theme }) => theme.colors.highlight};
   font-size: 13px;
 `;

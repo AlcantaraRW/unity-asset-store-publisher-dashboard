@@ -1,10 +1,9 @@
 import styled from 'styled-components/native';
-import Colors from '../../utils/colors';
 
 export const Container = styled.View.attrs({
   elevation: 2,
 })`
-  background: ${Colors.WHITE};
+  background-color: ${({ theme }) => theme.colors.primaryLight};
   border-radius: 10px;
   padding: 15px 18px;
   margin-bottom: 5px;
@@ -18,11 +17,12 @@ export const Option = styled.TouchableOpacity``;
 
 export const OptionText = styled.Text`
   font-size: 18px;
+  color: ${({ theme }) => theme.text.primary};
 `;
 
 export const Separator = styled.View`
   border-top-width: 1px;
-  border-top-color: ${Colors.LINE};
+  border-top-color: ${({ theme }) => theme.colors.line};
   margin: 12px 0;
 `;
 
@@ -36,6 +36,6 @@ export const CancelButton = styled.TouchableOpacity`
 `;
 
 export const CancelButtonText = styled.Text`
-  color: ${Colors.VIVID_BLUE};
+  color: ${({ theme }) => theme.colors.highlight};
   font-size: 13px;
 `;

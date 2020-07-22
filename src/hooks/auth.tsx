@@ -24,6 +24,9 @@ interface IAuthContextData {
   clearCredentials(): void;
 }
 
+const SESSION = 'kharma_session';
+const TOKEN = 'kharma_token';
+
 const AuthContext = createContext<IAuthContextData>({} as IAuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
@@ -32,10 +35,7 @@ const AuthProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     async function loadStoredData(): Promise<void> {
-      const [session, token] = await AsyncStorage.multiGet([
-        'kharma_session',
-        'kharma_token',
-      ]);
+      const [session, token] = await AsyncStorage.multiGet([SESSION, TOKEN]);
 
       const kharma_session = session[1];
       const kharma_token = token[1];
@@ -58,8 +58,8 @@ const AuthProvider: React.FC = ({ children }) => {
   const setAuthCredentials = useCallback(
     async (kharma_session: string, kharma_token: string) => {
       await AsyncStorage.multiSet([
-        ['kharma_session', kharma_session],
-        ['kharma_token', kharma_token],
+        [SESSION, kharma_session],
+        [TOKEN, kharma_token],
       ]);
 
       const publisher = await DataProvider.setAuthCookies(
@@ -78,7 +78,9 @@ const AuthProvider: React.FC = ({ children }) => {
     return !!kharma_session && !!kharma_token;
   }, [data]);
 
-  const clearCredentials = useCallback(() => {
+  const clearCredentials = useCallback(async () => {
+    await AsyncStorage.multiRemove([SESSION, TOKEN]);
+
     setData({} as IAuthData);
   }, []);
 

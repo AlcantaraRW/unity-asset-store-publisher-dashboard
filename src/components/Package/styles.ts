@@ -1,22 +1,21 @@
 import styled from 'styled-components/native';
-import Colors from '../../utils/colors';
 
 export const Container = styled.View.attrs({
   elevation: 2,
 })`
-  background: ${Colors.WHITE};
+  background: ${({ theme }) => theme.colors.primaryLight};
   border-radius: 10px;
   padding: 15px 18px;
   margin-bottom: 5px;
 `;
 
 export const PackageName = styled.Text`
-  color: ${Colors.VERY_DARK_GRAY};
+  color: ${({ theme }) => theme.text.primary};
   font-size: 20px;
 `;
 
 export const Price = styled.Text`
-  color: ${Colors.VERY_DARK_GRAY};
+  color: ${({ theme }) => theme.text.primary};
   font-size: 18px;
   font-weight: bold;
 `;
@@ -29,13 +28,13 @@ export const Row = styled.View`
 `;
 
 export const Version = styled.Text`
-  color: ${Colors.VERY_DARK_GRAY};
+  color: ${({ theme }) => theme.text.primary};
   font-size: 18px;
 `;
 
 export const Separator = styled.View`
   border-top-width: 1px;
-  border-top-color: ${Colors.LINE};
+  border-top-color: ${({ theme }) => theme.colors.line};
   margin: 15px 0;
 `;
 
@@ -50,6 +49,6 @@ export const Button = styled.TouchableOpacity`
 `;
 
 export const ButtonText = styled.Text`
-  color: ${Colors.VIVID_BLUE};
+  color: ${({ theme }) => theme.colors.highlight};
   font-size: 13px;
 `;
