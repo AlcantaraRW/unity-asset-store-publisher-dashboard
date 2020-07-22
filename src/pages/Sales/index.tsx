@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { FlatList } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Modal from 'react-native-modal';
 import Picker from '../../components/Picker';
 import IKeyValuePair from '../../models/IKeyValuePair';
@@ -10,15 +9,17 @@ import getQuantitativeText from '../../utils/getQuantitativeText';
 import formatPrice from '../../utils/formatPrice';
 import Loader from '../../components/Loader';
 import Center from '../../components/Center';
-import ApiClient from '../../services/ApiClient';
+import DataProvider from '../../services/DataProvider';
 
 import {
   Container,
   Header,
   PreviousMonthButton,
+  PreviousMonthIcon,
   PickMonthButton,
   SelectedMonth,
   NextMonthButton,
+  NextMonthIcon,
   ListContainer,
   ListSeparator,
   Footer,
@@ -37,7 +38,7 @@ const Sales: React.FC = () => {
   const [isLoadingSales, setIsLoadingSales] = useState(false);
 
   useEffect(() => {
-    ApiClient.getAvailableMonths().then(months => {
+    DataProvider.getAvailableMonths().then(months => {
       if (months) {
         setAvailableMonths(months);
         setSelectedMonth(months[0]);
@@ -47,16 +48,20 @@ const Sales: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!availableMonths.length || !selectedMonth) {
-      return;
-    }
+    async function load(): Promise<void> {
+      if (!availableMonths.length || !selectedMonth) {
+        return;
+      }
 
-    setIsLoadingSales(true);
+      setIsLoadingSales(true);
 
-    ApiClient.getSalesFromMonth(selectedMonth.value).then(summary => {
+      const summary = await DataProvider.getSalesFromMonth(selectedMonth.value);
+
       setSalesSummary(summary);
       setIsLoadingSales(false);
-    });
+    }
+
+    load();
   }, [availableMonths, selectedMonth]);
 
   const isLoading = useMemo(() => isLoadingMonths || isLoadingSales, [
@@ -134,7 +139,7 @@ const Sales: React.FC = () => {
           disabled={shouldHidePreviousMonthButton}
           onPress={handlePreviousMonth}
         >
-          <Icon name="chevron-left" size={25} />
+          <PreviousMonthIcon />
         </PreviousMonthButton>
 
         <PickMonthButton onPress={() => setShowModal(true)}>
@@ -146,7 +151,7 @@ const Sales: React.FC = () => {
           disabled={shouldHideNextMonthButton}
           onPress={handleNextMonth}
         >
-          <Icon name="chevron-right" size={25} />
+          <NextMonthIcon />
         </NextMonthButton>
       </Header>
 

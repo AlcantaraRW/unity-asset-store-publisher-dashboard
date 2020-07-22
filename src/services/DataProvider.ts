@@ -12,20 +12,23 @@ import PackageResponseTransformer from '../utils/responseTransformers/PackageRes
 import IReviewResponse from '../models/reviews/IReviewResponse';
 import IUnityReviewsResponse from '../models/responses/IUnityReviewsResponse';
 import ReviewResponseTransformer from '../utils/responseTransformers/ReviewResponseTransformer';
+import getRealm from './RealmService';
+import SalesSummary from '../schemas/SalesSummary';
+import formatMonthAsPeriod from '../utils/formatMonthAsPeriod';
 
-class ApiClient {
-  private client: AxiosInstance;
+class DataProvider {
+  private apiClient: AxiosInstance;
 
   private loggedPublisher: IPublisher | undefined;
 
   constructor() {
-    this.client = axios.create({
+    this.apiClient = axios.create({
       baseURL: 'https://publisher.assetstore.unity3d.com/api',
     });
   }
 
   private async getPublisherInfo(): Promise<IPublisher> {
-    const response = await this.client.get<IUnityPublisherOverviewResponse>(
+    const response = await this.apiClient.get<IUnityPublisherOverviewResponse>(
       'publisher/overview.json',
     );
 
@@ -45,7 +48,7 @@ class ApiClient {
     kharma_session: string,
     kharma_token: string,
   ): Promise<IPublisher> {
-    this.client.defaults.headers = {
+    this.apiClient.defaults.headers = {
       Cookie: `kharma_session=${kharma_session}; kharma_token=${kharma_token}`,
     };
 
@@ -53,7 +56,7 @@ class ApiClient {
   }
 
   async getAvailableMonths(): Promise<IKeyValuePair[]> {
-    const response = await this.client.get<IUnityMonthsResponse>(
+    const response = await this.apiClient.get<IUnityMonthsResponse>(
       `publisher-info/months/${this.loggedPublisher?.id}.json`,
     );
 
@@ -66,17 +69,56 @@ class ApiClient {
   }
 
   async getSalesFromMonth(month: string): Promise<ISalesSummary> {
-    const response = await this.client.get<IUnitySalesResponse>(
+    const shouldUseCache = this.dataCanBeCached(month);
+
+    if (shouldUseCache) {
+      const realm = await getRealm();
+      const cachedData = realm.objectForPrimaryKey<SalesSummary>(
+        SalesSummary.schema.name,
+        month,
+      );
+
+      if (cachedData) {
+        return cachedData;
+      }
+    }
+
+    const response = await this.apiClient.get<IUnitySalesResponse>(
       `publisher-info/sales/${this.loggedPublisher?.id}/${month}.json`,
     );
 
     const transformedData = SaleResponseTransformer.transform(response.data);
 
+    if (shouldUseCache) {
+      const realm = await getRealm();
+
+      realm.write(() => {
+        realm.create(
+          SalesSummary.schema.name,
+          { id: month, ...transformedData },
+          true,
+        );
+      });
+    }
+
     return transformedData;
   }
 
+  dataCanBeCached(month: string): boolean {
+    const current = new Date();
+    const previous = new Date();
+    previous.setMonth(current.getMonth() - 1);
+
+    const cannotBeCached = [
+      formatMonthAsPeriod(current),
+      formatMonthAsPeriod(previous),
+    ];
+
+    return !cannotBeCached.includes(month);
+  }
+
   async getPublishedPackages(): Promise<IPackage[]> {
-    const response = await this.client.get<IUnityPackagesResponse>(
+    const response = await this.apiClient.get<IUnityPackagesResponse>(
       'management/packages.json',
     );
 
@@ -89,7 +131,7 @@ class ApiClient {
     package_id: string,
     page: number,
   ): Promise<IReviewResponse> {
-    const response = await this.client.get<IUnityReviewsResponse>(
+    const response = await this.apiClient.get<IUnityReviewsResponse>(
       `publisher-info/reviews/${this.loggedPublisher?.id}.json?page=${page}&rows=20&order_key=date&sort=desc&asset_filter=${package_id}`,
     );
 
@@ -99,4 +141,4 @@ class ApiClient {
   }
 }
 
-export default new ApiClient();
+export default new DataProvider();

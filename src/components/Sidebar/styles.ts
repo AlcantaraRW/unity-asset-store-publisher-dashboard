@@ -1,7 +1,6 @@
 import styled from 'styled-components/native';
 import { DrawerItem } from '@react-navigation/drawer';
-
-import Colors from '../../utils/colors';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const Container = styled.View`
   flex: 1;
@@ -10,7 +9,7 @@ export const Container = styled.View`
 export const Header = styled.View`
   padding: 20px;
   margin-bottom: 10px;
-  background-color: ${Colors.LIGHT_GRAY};
+  background-color: ${({ theme }) => theme.colors.primary};
   justify-content: center;
   align-items: center;
 `;
@@ -19,7 +18,7 @@ export const Avatar = styled.Image`
   width: 80px;
   height: 80px;
   border-radius: 40px;
-  border-color: ${Colors.VERY_DARK_GRAY};
+  border-color: ${({ theme }) => theme.text.primary};
 `;
 
 export const PublisherName = styled.Text`
@@ -27,20 +26,36 @@ export const PublisherName = styled.Text`
   font-size: 16px;
   font-weight: bold;
   text-align: center;
+  color: ${({ theme }) => theme.text.primary};
 `;
 
 export const Separator = styled.View`
   border-top-width: 1px;
-  border-top-color: ${Colors.LINE};
+  border-top-color: ${({ theme }) => theme.colors.line};
   margin: 15px 0;
 `;
 
-export const DrawerOption = styled(DrawerItem).attrs({
-  activeBackgroundColor: Colors.LIGHT_GRAY,
-  activeTintColor: Colors.VERY_DARK_GRAY,
-  inactiveTintColor: Colors.VERY_DARK_GRAY,
-  labelStyle: {
-    fontSize: 16,
-    marginHorizontal: -20,
-  },
+export const DrawerOption = styled(DrawerItem).attrs(
+  ({ theme: { colors, text } }) => ({
+    activeBackgroundColor: colors.primary,
+    activeTintColor: text.primary,
+    inactiveTintColor: text.primary,
+    labelStyle: {
+      fontSize: 16,
+      marginHorizontal: -20,
+    },
+  }),
+)``;
+
+const DrawerOptionIcon = styled(Icon).attrs(({ theme }) => ({
+  size: 25,
+  color: theme.text.primary,
+}))``;
+
+export const SwitchThemeIcon = styled(DrawerOptionIcon).attrs({
+  name: 'theme-light-dark',
+})``;
+
+export const LogoutIcon = styled(DrawerOptionIcon).attrs({
+  name: 'logout',
 })``;

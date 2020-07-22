@@ -1,6 +1,5 @@
 import React, { memo, useCallback } from 'react';
 import { Alert } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
   DrawerContentComponentProps,
@@ -8,6 +7,7 @@ import {
 } from '@react-navigation/drawer';
 
 import { useAuth } from '../../hooks/auth';
+import { useTheme } from '../../hooks/theme';
 
 import {
   Container,
@@ -16,10 +16,13 @@ import {
   PublisherName,
   Separator,
   DrawerOption,
+  SwitchThemeIcon,
+  LogoutIcon,
 } from './styles';
 
 const Sidebar: React.FC<DrawerContentComponentProps> = ({ ...props }) => {
   const { publisher, clearCredentials } = useAuth();
+  const { toggleTheme } = useTheme();
 
   const confirmLogout = useCallback(() => {
     Alert.alert('Confirm', 'Are you sure you want to logout?', [
@@ -45,9 +48,15 @@ const Sidebar: React.FC<DrawerContentComponentProps> = ({ ...props }) => {
       <Separator />
 
       <DrawerOption
+        label="Switch theme"
+        onPress={toggleTheme}
+        icon={() => <SwitchThemeIcon />}
+      />
+
+      <DrawerOption
         label="Logout"
         onPress={confirmLogout}
-        icon={() => <Icon name="logout-variant" size={25} />}
+        icon={() => <LogoutIcon />}
       />
     </Container>
   );

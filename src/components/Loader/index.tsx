@@ -1,8 +1,6 @@
 import React from 'react';
-import { ActivityIndicator } from 'react-native';
 
-import { Container, Message } from './styles';
-import Colors from '../../utils/colors';
+import { Container, Spinner, Message } from './styles';
 
 interface ILoaderProps {
   message: string;
@@ -11,7 +9,7 @@ interface ILoaderProps {
 const Loader: React.FC<ILoaderProps> = ({ message }) => {
   return (
     <Container>
-      <ActivityIndicator size={40} color={Colors.VIVID_BLUE} />
+      <Spinner />
       <Message>{message}</Message>
     </Container>
   );

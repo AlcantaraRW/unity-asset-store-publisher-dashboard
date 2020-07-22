@@ -1,47 +1,52 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ThemeContext } from 'styled-components';
 import MainStackRoutes from '../MainStack';
-import Colors from '../../utils/colors';
 import Sidebar from '../../components/Sidebar';
 import Sales from '../../pages/Sales';
 
 const Drawer = createDrawerNavigator();
 
-const DrawerRoutes: React.FC = () => (
-  <Drawer.Navigator
-    drawerContent={props => <Sidebar {...props} />}
-    drawerContentOptions={{
-      labelStyle: {
-        fontSize: 16,
-        marginHorizontal: -20,
-      },
-      activeBackgroundColor: Colors.LIGHT_GRAY,
-      activeTintColor: Colors.VERY_DARK_GRAY,
-      inactiveTintColor: Colors.VERY_DARK_GRAY,
-    }}
-  >
-    <Drawer.Screen
-      name="Sales"
-      component={Sales}
-      options={{
-        drawerIcon: () => (
-          <Icon name="coin" size={25} color={Colors.VERY_DARK_GRAY} />
-        ),
-      }}
-    />
+const DrawerRoutes: React.FC = () => {
+  const { colors, text } = useContext(ThemeContext);
 
-    <Drawer.Screen
-      name="Packages"
-      component={MainStackRoutes}
-      options={{
-        title: 'Published packages',
-        drawerIcon: () => (
-          <Icon name="cube-outline" size={25} color={Colors.VERY_DARK_GRAY} />
-        ),
+  return (
+    <Drawer.Navigator
+      drawerContent={props => <Sidebar {...props} />}
+      drawerStyle={{
+        backgroundColor: colors.primaryLight,
       }}
-    />
-  </Drawer.Navigator>
-);
+      drawerContentOptions={{
+        labelStyle: {
+          fontSize: 16,
+          marginHorizontal: -20,
+        },
+        activeBackgroundColor: colors.primary,
+        activeTintColor: text.primary,
+        inactiveTintColor: text.primary,
+      }}
+    >
+      <Drawer.Screen
+        name="Sales"
+        component={Sales}
+        options={{
+          drawerIcon: () => <Icon name="coin" size={25} color={text.primary} />,
+        }}
+      />
+
+      <Drawer.Screen
+        name="Packages"
+        component={MainStackRoutes}
+        options={{
+          title: 'Published packages',
+          drawerIcon: () => (
+            <Icon name="cube-outline" size={25} color={text.primary} />
+          ),
+        }}
+      />
+    </Drawer.Navigator>
+  );
+};
 
 export default DrawerRoutes;

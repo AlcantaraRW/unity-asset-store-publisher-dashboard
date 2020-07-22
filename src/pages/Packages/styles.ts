@@ -1,9 +1,8 @@
 import styled from 'styled-components/native';
-import Colors from '../../utils/colors';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
-  background: ${Colors.LIGHT_GRAY};
+  background: ${({ theme }) => theme.colors.primary};
 `;
 
 export const Header = styled.View.attrs({
@@ -16,11 +15,13 @@ export const Header = styled.View.attrs({
 export const Title = styled.Text`
   font-size: 20px;
   font-weight: bold;
+  color: ${({ theme }) => theme.text.primary};
 `;
 
 export const TotalEntries = styled.Text`
   font-size: 15px;
   text-align: center;
+  color: ${({ theme }) => theme.text.primary};
 `;
 
 export const ListContainer = styled.View`
