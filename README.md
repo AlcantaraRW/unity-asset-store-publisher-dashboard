@@ -2,7 +2,7 @@
 
 ### What is the app about?
 
-Unity Asset Store Publisher Dashboard aims to simplify the visualization of important data to Asset publishers, such as sales, packages and reviews.
+Unity Asset Store Publisher Dashboard is an Android app built with React Native and TypeScript that aims to simplify the visualization of important data to Asset publishers, such as sales, packages and reviews.
 You can see some screenshots [here](https://github.com/AlcantaraRW/unity-asset-store-publisher-dashboard/blob/dev/screenshots).
 
 ### How does this app access my data?
